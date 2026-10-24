@@ -2,127 +2,385 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NomadCompass — AI Travel Concierge & Expedition Planner</title>
+    <meta name="description" content="Plan your dream journey with live flight tracking, curated boutique stays, and custom day-by-day itineraries.">
 
-    <title>NomadCompass</title>
+    <!-- Typography: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
 
-    <div class="page-bg">
-        <div class="gradient-circle circle-1"></div>
-        <div class="gradient-circle circle-2"></div>
-        <div class="gradient-circle circle-3"></div>
+    <!-- Ambient Cosmic Travel Glow -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div class="map-grid-pattern"></div>
     </div>
 
-    <main class="app-container">
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <a href="/" class="brand">
+                <div class="brand-compass">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor"></polygon>
+                    </svg>
+                </div>
+                <div class="brand-copy">
+                    <span class="brand-title">Nomad<span class="brand-gold">Compass</span></span>
+                    <span class="brand-sub">AI Travel Concierge</span>
+                </div>
+            </a>
 
+            <div class="header-right">
+                <div class="fleet-status">
+                    <span class="fleet-dot"></span>
+                    <span>Multi-Agent Fleet Online</span>
+                </div>
+
+                <button class="nav-btn" id="historyToggleBtn" onclick="toggleHistoryDrawer()" title="View past itineraries">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Saved Trips</span>
+                    <span class="count-tag" id="historyCountBadge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- Hero Section -->
         <section class="hero-section">
-            <div class="badge">
-                ✈️ NomadCompass — A Multi-Agent Travel Planner with LangGraph
+            <div class="hero-badge">
+                <span class="badge-icon">🧭</span>
+                <span>Autonomous Expedition Architect • Powered by LangGraph</span>
             </div>
 
-            <h1>
-                Plan Your Perfect Trip with AI
+            <h1 class="hero-title">
+                Where will your <span class="gradient-text">wanderlust</span> take you?
             </h1>
 
-            <p>
-                Search flights, discover hotels, and generate a complete travel itinerary using a multi-agent LangGraph system.
+            <p class="hero-subtitle">
+                Search live flight routes, discover curated stays, and generate customized day-by-day itineraries tailored to your style and budget.
             </p>
+
+            <!-- 3 Compact Capability Badges -->
+            <div class="capability-badges">
+                <div class="cap-badge">
+                    <span class="cap-icon">🛫</span>
+                    <span>Live AviationStack Routes</span>
+                </div>
+                <div class="cap-badge">
+                    <span class="cap-icon">🏨</span>
+                    <span>Curated Boutique Stays</span>
+                </div>
+                <div class="cap-badge">
+                    <span class="cap-icon">🗺️</span>
+                    <span>Day-by-Day Timeline</span>
+                </div>
+            </div>
         </section>
 
-        <section class="planner-card">
+        <!-- Travel Planner Cockpit Card -->
+        <section class="planner-card" id="plannerCard">
 
-            <div class="card-header">
-                <div>
-                    <h2>Where do you want to go?</h2>
-                    <p>
-                        Example: Plan a complete 7 days Japan trip from India under 2 lakhs.
-                    </p>
+            <!-- Destination Inspiration Cards (Balanced 4-card grid) -->
+            <div class="destinations-section">
+                <div class="section-heading">
+                    <span class="heading-title">✨ Popular Wanderlust Escapes</span>
+                    <span class="heading-tip">Click any destination to load ready-to-plan template</span>
                 </div>
 
-                <div class="status-pill">
-                    <span class="status-dot"></span>
-                    Online
+                <div class="destinations-grid">
+                    <button class="dest-card" onclick="setPreset('Japan', 'Plan a complete 7-day Japan itinerary from Delhi covering Tokyo and Kyoto, including flights, boutique hotels, bullet train travel, culture & culinary spots under 2.5 Lakhs INR.')">
+                        <span class="dest-emoji">🌸</span>
+                        <div class="dest-info">
+                            <strong>Tokyo & Kyoto, Japan</strong>
+                            <span>7 Days • Bullet Trains, Culture & Food</span>
+                        </div>
+                    </button>
+
+                    <button class="dest-card" onclick="setPreset('Bali', 'Plan a 6-day tropical Bali and Ubud getaway from Mumbai with romantic pool villas, waterfall treks, beach clubs, and wellness spas for 2 people under 2 Lakhs.')">
+                        <span class="dest-emoji">🏝️</span>
+                        <div class="dest-info">
+                            <strong>Bali & Ubud, Indonesia</strong>
+                            <span>6 Days • Pool Villas, Temples & Waterfalls</span>
+                        </div>
+                    </button>
+
+                    <button class="dest-card" onclick="setPreset('Dubai', 'Plan a 5-day luxury Dubai trip from Delhi including flights, Burj Khalifa, desert safari with BBQ, luxury marina stays, and shopping under 1.8 Lakhs.')">
+                        <span class="dest-emoji">🏜️</span>
+                        <div class="dest-info">
+                            <strong>Dubai & Marina, UAE</strong>
+                            <span>5 Days • Skyline, Desert Safari & Luxury</span>
+                        </div>
+                    </button>
+
+                    <button class="dest-card" onclick="setPreset('Swiss Alps', 'Plan a 7-day scenic Switzerland journey from India covering Zurich, Interlaken, and Lucerne with panoramic train journeys, alpine hikes, and cozy stays under 3.5 Lakhs.')">
+                        <span class="dest-emoji">🏔️</span>
+                        <div class="dest-info">
+                            <strong>Swiss Alps & Lakes</strong>
+                            <span>7 Days • Panoramic Rails & Alpine Trails</span>
+                        </div>
+                    </button>
                 </div>
             </div>
 
-            <div class="input-area">
+            <!-- Travel Style Tags -->
+            <div class="styles-row">
+                <span class="styles-label">Travel Style:</span>
+                <div class="styles-chips">
+                    <button class="style-tag" onclick="appendStyle('budget-friendly backpacking with hostels and local trains')">🎒 Backpacker</button>
+                    <button class="style-tag" onclick="appendStyle('luxury boutique stays, scenic views, and fine dining')">💎 Luxury & Boutique</button>
+                    <button class="style-tag" onclick="appendStyle('foodie culinary trail with street food and iconic local spots')">🍜 Food & Culinary</button>
+                    <button class="style-tag" onclick="appendStyle('outdoor adventure with trekking, nature reserves, and water activities')">🧗 Wild Adventure</button>
+                    <button class="style-tag" onclick="appendStyle('relaxation and wellness with spas, yoga, and calm beaches')">🧘 Wellness & Chill</button>
+                </div>
+            </div>
+
+            <!-- Main Input Box -->
+            <div class="input-cockpit">
                 <textarea
                     id="userInput"
-                    placeholder="Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs..."
+                    rows="4"
+                    placeholder="Describe your travel dreams, e.g. Plan a 7-day trip to Japan from Delhi for 2 people with Tokyo and Kyoto, bullet trains, boutique hotels, and authentic food under 2.5 Lakhs..."
+                    oninput="handleInputTyping()"
                 ></textarea>
 
-                <button id="sendBtn" onclick="sendMessage()">
-                    <span id="btnText">Generate Plan</span>
-                    <span id="btnLoader" class="loader hidden"></span>
-                </button>
+                <div class="input-toolbar">
+                    <div class="toolbar-left">
+                        <button type="button" class="btn-tool" onclick="surpriseMe()" id="surpriseBtn" title="Load an exciting random journey">
+                            <span>🎲</span> Surprise Me
+                        </button>
+                        <button type="button" class="btn-tool" onclick="clearInput()" id="clearBtn">
+                            Clear
+                        </button>
+                        <span class="shortcut-hint">Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <span id="charCount" class="word-counter">0 words</span>
+                        <button id="sendBtn" class="btn-craft" onclick="sendMessage()">
+                            <span id="btnIcon" class="btn-icon">✈️</span>
+                            <span id="btnText">Craft My Itinerary</span>
+                            <span id="btnLoader" class="loader hidden"></span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div class="quick-prompts">
-                <button onclick="setPrompt('Plan a complete 7 days Japan trip from India including flights, hotels and sightseeing under 2 lakhs.')">
-                    Japan Trip
-                </button>
-
-                <button onclick="setPrompt('Plan a 5 days Dubai trip from Delhi with flights, hotels and sightseeing.')">
-                    Dubai Trip
-                </button>
-
-                <button onclick="setPrompt('Plan a 7 days Thailand trip from India with budget hotels and sightseeing.')">
-                    Thailand Trip
-                </button>
-
-                <button onclick="setPrompt('Give me all country flight info.')">
-                    Global Flights
-                </button>
+            <!-- Quick Global Route Helpers -->
+            <div class="quick-helpers">
+                <span class="helpers-label">⚡ Quick Prompts:</span>
+                <button class="helper-chip" onclick="setPrompt('Give me all country flight info and live status.')">🌐 Global Flights Radar</button>
+                <button class="helper-chip" onclick="setPrompt('Plan a 4-day weekend beach trip to Goa from Mumbai with beach resorts and seafood restaurants under 50,000 INR.')">🏖️ 4-Day Goa Escape</button>
+                <button class="helper-chip" onclick="setPrompt('Plan a 6-day Thailand island hopping vacation across Phuket and Krabi from Bangalore under 1.3 Lakhs.')">🏝️ 6-Day Thailand Islands</button>
             </div>
 
         </section>
 
-        <section id="resultSection" class="result-section hidden">
-
-            <div class="result-header">
-                <div>
-                    <h2>Your AI Travel Plan</h2>
-                    <p id="threadInfo">Thread ID: -</p>
+        <!-- Live Multi-Agent Mission Tracker (Balanced HUD) -->
+        <section id="agentRadarSection" class="mission-hud hidden" aria-live="polite">
+            <div class="hud-card">
+                <div class="hud-top">
+                    <div class="hud-pulse-radar">
+                        <div class="radar-dot"></div>
+                        <div class="radar-wave"></div>
+                    </div>
+                    <div class="hud-text">
+                        <span class="hud-status-tag">MISSION IN PROGRESS</span>
+                        <h3 id="radarStatusHeading">Orchestrating Your Voyage</h3>
+                        <p id="radarStatusSub">Your dedicated travel agents are querying global aviation feeds and scouting boutique stays...</p>
+                    </div>
+                    <div class="hud-timer">
+                        <span class="timer-title">ELAPSED</span>
+                        <span class="timer-digits" id="radarTimer">00:00</span>
+                    </div>
                 </div>
 
-                <div class="result-actions">
-                    <button class="copy-btn" onclick="copyResult()">
-                        Copy
+                <!-- 4 Agent Step Cards -->
+                <div class="hud-steps">
+                    <div class="hud-step active" id="stepFlight">
+                        <div class="hud-step-icon">🛫</div>
+                        <div class="hud-step-content">
+                            <strong>Flight Scout</strong>
+                            <span>AviationStack API</span>
+                        </div>
+                        <span class="hud-step-status">Scanning...</span>
+                    </div>
+
+                    <div class="hud-step" id="stepHotel">
+                        <div class="hud-step-icon">🏨</div>
+                        <div class="hud-step-content">
+                            <strong>Stay Curator</strong>
+                            <span>Tavily Search</span>
+                        </div>
+                        <span class="hud-step-status">Standby</span>
+                    </div>
+
+                    <div class="hud-step" id="stepItinerary">
+                        <div class="hud-step-icon">🗺️</div>
+                        <div class="hud-step-content">
+                            <strong>Route Architect</strong>
+                            <span>Daily Planner</span>
+                        </div>
+                        <span class="hud-step-status">Standby</span>
+                    </div>
+
+                    <div class="hud-step" id="stepDossier">
+                        <div class="hud-step-icon">💎</div>
+                        <div class="hud-step-content">
+                            <strong>Concierge</strong>
+                            <span>Budget & Polish</span>
+                        </div>
+                        <span class="hud-step-status">Standby</span>
+                    </div>
+                </div>
+
+                <div class="hud-progress-line">
+                    <div class="hud-progress-fill" id="radarProgressFill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Travel Dossier Result Section -->
+        <section id="resultSection" class="dossier-section hidden">
+
+            <div class="dossier-header">
+                <div class="dossier-meta">
+                    <div class="dossier-badge">
+                        <span class="badge-dot"></span>
+                        <span>OFFICIAL TRAVEL DOSSIER</span>
+                    </div>
+                    <h2 id="dossierTitle" class="dossier-heading">Curated Expedition Itinerary</h2>
+                    <div class="dossier-tags">
+                        <span id="threadInfo" class="tag-pill">Thread: -</span>
+                        <span id="dossierTimestamp" class="tag-pill">Crafted Just Now</span>
+                    </div>
+                </div>
+
+                <div class="dossier-actions">
+                    <button class="action-btn" onclick="copyResult()" id="copyBtn" title="Copy itinerary markdown">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Copy</span>
                     </button>
 
-                    <button class="download-btn" onclick="downloadPDF()">
-                        Download PDF
+                    <button class="action-btn action-pdf" onclick="downloadPDF()" id="downloadPdfBtn" title="Download formatted PDF">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span>Download PDF</span>
+                    </button>
+
+                    <button class="action-btn" onclick="printDossier()" id="printBtn" title="Print itinerary">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                            <rect x="6" y="14" width="12" height="8"></rect>
+                        </svg>
+                        <span>Print</span>
+                    </button>
+
+                    <button class="action-btn action-new" onclick="scrollToTop()" title="Plan another expedition">
+                        <span>✈️ New Trip</span>
                     </button>
                 </div>
             </div>
 
-            <div id="pdfContent" class="pdf-content">
-                <h1 class="pdf-title">AI Travel Plan</h1>
-                <div id="resultBox" class="result-box"></div>
+            <!-- View Tabs -->
+            <div class="dossier-tabs" id="dossierNavTabs">
+                <button class="tab-btn active" onclick="filterDossierView('all')">📖 Complete Dossier</button>
+                <button class="tab-btn" onclick="filterDossierView('flights')">🛫 Flights</button>
+                <button class="tab-btn" onclick="filterDossierView('hotels')">🏨 Stays & Hotels</button>
+                <button class="tab-btn" onclick="filterDossierView('itinerary')">🗓️ Day-by-Day</button>
+                <button class="tab-btn" onclick="filterDossierView('budget')">💰 Budget & Tips</button>
+            </div>
+
+            <!-- Printable & Viewable Content Body -->
+            <div id="pdfContent" class="dossier-content">
+                <div class="pdf-print-header">
+                    <h1>NomadCompass</h1>
+                    <p>Bespoke AI Travel Expedition Dossier</p>
+                </div>
+
+                <div id="resultBox" class="result-markdown-body"></div>
+
+                <div class="pdf-print-footer">
+                    <p>Crafted by NomadCompass • Powered by LangGraph, AviationStack & Tavily</p>
+                    <p class="pdf-disclaimer">Flight timings are based on live AviationStack schedules. Verify tickets and visa requirements prior to departure.</p>
+                </div>
             </div>
 
         </section>
 
-        <section id="errorBox" class="error-box hidden"></section>
+        <!-- Error Notification -->
+        <section id="errorBox" class="error-card hidden" role="alert">
+            <span class="error-badge">⚠️</span>
+            <div class="error-text">
+                <strong id="errorHeading">Notice:</strong>
+                <span id="errorMessage">Something went wrong while planning your journey.</span>
+            </div>
+            <button class="error-close" onclick="hideError()">✕</button>
+        </section>
 
     </main>
 
-    <footer>
-        Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily and AviationStack
+    <!-- Past Expeditions Drawer -->
+    <div id="historyDrawer" class="history-panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <span class="panel-icon">🗂️</span>
+                <h3>Saved Expeditions</h3>
+            </div>
+            <button class="panel-close" onclick="toggleHistoryDrawer()">✕</button>
+        </div>
+
+        <div class="panel-body" id="historyList">
+            <div class="panel-empty">
+                <p>No saved trips yet. When you generate an itinerary, it will appear here for easy 1-click reloads!</p>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <button class="btn-clear-panel" onclick="clearExpeditionHistory()">Clear History</button>
+        </div>
+    </div>
+    <div id="drawerOverlay" class="panel-overlay" onclick="toggleHistoryDrawer()"></div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-bubble hidden">
+        <span id="toastIcon">✨</span>
+        <span id="toastText">Itinerary copied to clipboard!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-inner">
+            <p class="footer-quote">“Jobs fill your pocket, but adventures fill your soul.”</p>
+            <p class="footer-meta">NomadCompass • Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily & AviationStack</p>
+        </div>
     </footer>
 
-    <!-- Markdown Renderer -->
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <!-- PDF Download Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <!-- Your Custom JS -->
     <script src="/static/script.js"></script>
 
 </body>
